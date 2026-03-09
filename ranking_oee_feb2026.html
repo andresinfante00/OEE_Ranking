@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranking OEE — Febrero 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #080b12;
+  --s1:      #0e1422;
+  --s2:      #131b2e;
+  --s3:      #192236;
+  --border:  #1e2d45;
+  --border2: #253854;
+  --text:    #dde4f0;
+  --muted:   #5a6a85;
+  --light:   #8899b4;
+  --B:       #f59e0b;
+  --S:       #3b82f6;
+  --T:       #10b981;
+  --green:   #10b981;
+  --red:     #ef4444;
+  --cyan:    #06b6d4;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── WRAPPER ── */
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── HEADER ── */
+.page-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.page-eyebrow::before { content:''; display:block; width:20px; height:2px; background:currentColor; }
+.page-title { font-size: 28px; font-weight: 900; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 6px; }
+.page-sub { font-size: 13px; color: var(--light); font-weight: 300; }
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 36px 0 20px;
+}
+.divider h3 { font-size: 16px; font-weight: 800; white-space: nowrap; }
+.divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── TOP 3 CARDS ── */
+.podio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.podio-card {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.podio-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.podio-top-line { position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; }
+
+.podio-pos {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.podio-pos-icon { font-size: 18px; line-height: 1; }
+
+.podio-name { font-size: 15px; font-weight: 900; letter-spacing: -.01em; margin-bottom: 2px; }
+.podio-centro {
+  font-size: 9px; font-weight: 800; padding: 1px 7px;
+  border-radius: 4px; letter-spacing: .07em;
+  text-transform: uppercase; display: inline-block; margin-bottom: 14px;
+}
+
+.podio-mejora {
+  font-size: 34px; font-weight: 900;
+  font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 3px;
+}
+.podio-mejora-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+.podio-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px; margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.podio-stat-val {
+  font-size: 13px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.podio-stat-lbl {
+  font-size: 9px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em; margin-top: 2px;
+}
+
+/* ── TABLA ── */
+.card {
+  background: var(--s2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px 22px 20px; overflow: hidden;
+}
+.card-header { margin-bottom: 16px; }
+.card-header h3 { font-size: 14px; font-weight: 700; }
+.card-header .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); font-weight: 700;
+  padding: 9px 12px; text-align: left;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.tbl td {
+  padding: 11px 12px; font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.03);
+  vertical-align: middle;
+}
+.tbl tr:last-child td { border: none; }
+.tbl tr:hover td { background: rgba(255,255,255,.02); }
+
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.pill { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; }
+.pg { background:rgba(16,185,129,.15);  color:#10b981; }
+.pb { background:rgba(59,130,246,.15);  color:#3b82f6; }
+.pa { background:rgba(245,158,11,.15);  color:#f59e0b; }
+.po { background:rgba(249,115,22,.15);  color:#f97316; }
+.pr { background:rgba(239,68,68,.15);   color:#ef4444; }
+
+/* mini track */
+.mini-track {
+  position: relative; height: 6px;
+  background: rgba(255,255,255,.06);
+  border-radius: 3px; width: 100%; min-width: 100px;
+}
+.mini-fill { height:100%; border-radius:3px; transition: width 1s cubic-bezier(.4,0,.2,1); }
+.mini-meta { position:absolute; top:-3px; bottom:-3px; width:1.5px; background:var(--cyan); opacity:.7; border-radius:1px; }
+.mini-base { position:absolute; top:-2px; bottom:-2px; width:1.5px; background:rgba(255,255,255,.3); border-radius:1px; }
+
+.rank-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  width: 20px; text-align: center; color: var(--muted); display:inline-block;
+}
+.rank-num.gold   { color: #f59e0b; }
+.rank-num.silver { color: #94a3b8; }
+.rank-num.bronze { color: #c87941; }
+
+.mejora-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700;
+}
+.mejora-val.pos { color: var(--green); }
+.mejora-val.neg { color: var(--red); }
+
+/* ── FILTER BUTTONS ── */
+.filter-btn {
+  font-family: 'Figtree', sans-serif;
+  font-size: 11px; font-weight: 700;
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--s3); color: var(--muted);
+  cursor: pointer; transition: all .15s;
+  letter-spacing: .04em;
+}
+.filter-btn:hover { color: var(--text); background: var(--s3); }
+.filter-btn.active {
+  background: var(--fb, var(--s3));
+  border-color: var(--fc, var(--border2));
+  color: var(--fc, var(--text));
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div style="margin-bottom: 36px;">
+    <div class="page-eyebrow">OEE · Eficiencia Global de Equipos</div>
+    <div class="page-title">Ranking OEE — Febrero 2026</div>
+    <div class="page-sub">Ordenado por % Mejora hacia la meta respecto a línea base (Nov–Dic–Ene 2026)</div>
+  </div>
+
+  <!-- TOP 3 -->
+  <div class="divider"><h3>🏆 Top 3 · Mayor Avance hacia la Meta</h3></div>
+  <div class="podio-grid" id="podio"></div>
+
+  <!-- RANKING COMPLETO -->
+  <div class="divider"><h3>Ranking Completo</h3></div>
+  <div class="card">
+    <div class="card-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div>
+        <h3>Todas las plantas · de mayor a menor % Mejora</h3>
+        <div class="sub">Barra: OEE Feb sobre escala 0–90% · línea blanca = Base · línea cyan = Meta</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="filter-btn active" onclick="setFiltro('TODOS',this)">Todos</button>
+        <button class="filter-btn" onclick="setFiltro('BIANCHI',this)" style="--fc:#f59e0b;--fb:rgba(245,158,11,.12)">BIANCHI</button>
+        <button class="filter-btn" onclick="setFiltro('SUPER',this)"   style="--fc:#3b82f6;--fb:rgba(59,130,246,.12)">SUPER</button>
+        <button class="filter-btn" onclick="setFiltro('TRULULU',this)" style="--fc:#10b981;--fb:rgba(16,185,129,.12)">TRULULU</button>
+      </div>
+    </div>
+    <table class="tbl">
+      <thead><tr>
+        <th>#</th>
+        <th>Planta</th>
+        <th>Centro</th>
+        <th>Línea Base</th>
+        <th>OEE Feb</th>
+        <th>Meta</th>
+        <th style="width:130px">Progreso</th>
+        <th>% Mejora</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const DATA = [
+  {p:'Trululu ST',      c:'TRULULU', cc:'T', linea:.5694, feb:.6069, meta:.5859, mejora:2.2692},
+  {p:'Planta Super 1',  c:'SUPER',   cc:'S', linea:.4488, feb:.5377, meta:.5423, mejora:.9514},
+  {p:'Planta Super 2',  c:'SUPER',   cc:'S', linea:.7101, feb:.7177, meta:.7380, mejora:.2709},
+  {p:'Planta Fabry',    c:'BIANCHI', cc:'B', linea:.5871, feb:.5946, meta:.6199, mejora:.2308},
+  {p:'Trululu 3',       c:'TRULULU', cc:'T', linea:.4787, feb:.4963, meta:.5554, mejora:.2300},
+  {p:'Trululu 2',       c:'TRULULU', cc:'T', linea:.5033, feb:.5159, meta:.5719, mejora:.1838},
+  {p:'Planta Super 3',  c:'SUPER',   cc:'S', linea:.3938, feb:.3994, meta:.5061, mejora:.0504},
+  {p:'Planta Bianchi 1',c:'BIANCHI', cc:'B', linea:.5089, feb:.4687, meta:.5622, mejora:-.7548},
+  {p:'Planta Bianchi 3',c:'BIANCHI', cc:'B', linea:.4091, feb:.3309, meta:.4886, mejora:-.9825},
+  {p:'Trululu 1',       c:'TRULULU', cc:'T', linea:.7192, feb:.6472, meta:.7392, mejora:-3.6173},
+];
+
+const CENTRO = {
+  B: {color:'#f59e0b', bg:'rgba(245,158,11,.15)'},
+  S: {color:'#3b82f6', bg:'rgba(59,130,246,.15)'},
+  T: {color:'#10b981', bg:'rgba(16,185,129,.15)'},
+};
+
+const pct = v => (v*100).toFixed(1)+'%';
+const imp = v => (v>=0?'+':'')+(v*100).toFixed(1)+'%';
+
+function status(m) {
+  if (m >= 1)   return {cls:'pg', txt:'Excelente'};
+  if (m >= 0.1) return {cls:'pb', txt:'Mejora'};
+  if (m >= 0)   return {cls:'pa', txt:'Estable'};
+  if (m >= -.5) return {cls:'po', txt:'Leve caída'};
+  return               {cls:'pr', txt:'Crítico'};
+}
+
+/* ── PODIO ── */
+const icons  = ['🥇','🥈','🥉'];
+const colors = ['#f59e0b','#94a3b8','#c87941'];
+const labels = ['#1 · ORO','#2 · PLATA','#3 · BRONCE'];
+
+document.getElementById('podio').innerHTML = DATA.slice(0,3).map((d,i) => {
+  const cc = CENTRO[d.cc];
+  return `
+  <div class="podio-card">
+    <div class="podio-top-line" style="background:${colors[i]}"></div>
+    <div class="podio-pos" style="color:${colors[i]}">
+      <span class="podio-pos-icon">${icons[i]}</span>${labels[i]}
+    </div>
+    <div class="podio-name">${d.p}</div>
+    <div class="podio-centro" style="background:${cc.bg};color:${cc.color}">${d.c}</div>
+    <div class="podio-mejora" style="color:${d.mejora>=0?'#10b981':'#ef4444'}">${imp(d.mejora)}</div>
+    <div class="podio-mejora-lbl">% Mejora hacia meta</div>
+    <div class="podio-stats">
+      <div>
+        <div class="podio-stat-val" style="color:var(--light)">${pct(d.linea)}</div>
+        <div class="podio-stat-lbl">Línea Base</div>
+      </div>
+      <div>
+        <div class="podio-stat-val" style="color:${d.feb>=d.linea?'#10b981':'#ef4444'}">${pct(d.feb)}</div>
+        <div class="podio-stat-lbl">OEE Feb</div>
+      </div>
+      <div>
+        <div class="podio-stat-val" style="color:var(--cyan)">${pct(d.meta)}</div>
+        <div class="podio-stat-lbl">Meta</div>
+      </div>
+    </div>
+  </div>`;
+}).join('');
+
+/* ── TABLA ── */
+const rankCls = ['gold','silver','bronze'];
+
+function renderTabla(filtro) {
+  const rows = filtro === 'TODOS' ? DATA : DATA.filter(d => d.c === filtro);
+  document.getElementById('tbody').innerHTML = rows.map((d, i) => {
+    const cc = CENTRO[d.cc];
+    const isPos = d.mejora >= 0;
+    const barW  = Math.min(100, (d.feb  / .9 * 100)).toFixed(1);
+    const baseW = Math.min(100, (d.linea/ .9 * 100)).toFixed(1);
+    const metaW = Math.min(100, (d.meta / .9 * 100)).toFixed(1);
+    return `<tr>
+    <td><span class="rank-num ${rankCls[i]||''}">${i+1}</span></td>
+    <td><strong>${d.p}</strong></td>
+    <td><span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;background:${cc.bg};color:${cc.color}">${d.c}</span></td>
+    <td class="mono" style="color:var(--light)">${pct(d.linea)}</td>
+    <td class="mono" style="color:${d.feb>=d.linea?'#10b981':'#ef4444'};font-weight:700">${pct(d.feb)}</td>
+    <td class="mono" style="color:var(--cyan)">${pct(d.meta)}</td>
+    <td>
+      <div class="mini-track">
+        <div class="mini-fill" style="width:0%;background:${isPos?'rgba(16,185,129,.65)':'rgba(239,68,68,.65)'}" data-w="${barW}"></div>
+        <div class="mini-base" style="left:${baseW}%"></div>
+        <div class="mini-meta" style="left:${metaW}%"></div>
+      </div>
+    </td>
+    <td><span class="mejora-val ${isPos?'pos':'neg'}">${isPos?'↑':'↓'} ${imp(d.mejora)}</span></td>
+  </tr>`;
+  }).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.mini-fill[data-w]').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 50);
+}
+
+function setFiltro(filtro, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTabla(filtro);
+}
+
+renderTabla('TODOS');
+</script>
+</body>
+</html>
